@@ -4,7 +4,6 @@ import java.util.*;
 
 import DAO.AccountDAO;
 import DAO.MessageDAO;
-import Model.Account;
 import Model.Message;
 
 public class MessageService {
@@ -34,7 +33,7 @@ public class MessageService {
     }
 
     public Message addMessage(Message message) {
-        if(message.getMessage_text().isEmpty() == true || 
+        if(message.getMessage_text().isEmpty() == true || message.getMessage_text().length() > 255 || 
         messageDAO.getMessageById(message.getMessage_id()) != null)
         {
             return null;
@@ -45,7 +44,7 @@ public class MessageService {
 
    public Message updateMessage(int message_id, Message message) {
         Message msg = messageDAO.getMessageById(message_id);
-        if(msg == null){
+        if(msg == null || msg.getMessage_text().length() > 255 || msg.getMessage_text().isEmpty() == true){
             return null;
         }
         return messageDAO.updateMessage(message_id, message);
